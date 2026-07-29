@@ -14,7 +14,7 @@ const sourcePath = path.resolve(
 );
 const outputPath = path.resolve(
   process.argv[3] ||
-  path.join(projectRoot, 'data', 'content.json')
+  path.join(projectRoot, 'content', 'content.json')
 );
 
 function parseIndex(source) {

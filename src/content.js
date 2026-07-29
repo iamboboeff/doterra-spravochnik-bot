@@ -3,7 +3,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const defaultContentPath = path.resolve(here, '..', 'data', 'content.json');
+// Каталог называется content, а не data: агент Bothost умеет вырезать из
+// репозитория любые папки с именем data, вместе с исходниками внутри.
+const defaultContentPath = path.resolve(here, '..', 'content', 'content.json');
 
 export function normalize(value = '') {
   return value

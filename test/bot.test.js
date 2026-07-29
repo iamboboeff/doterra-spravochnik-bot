@@ -8,7 +8,7 @@ import { DIRECT_NAMES, publicizeText } from '../src/publicize.js';
 import { mainMenu, topicsMenu } from '../src/ui.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const contentPath = path.resolve(here, '..', 'data', 'content.json');
+const contentPath = path.resolve(here, '..', 'content', 'content.json');
 
 test('generated content has the complete recovered index', () => {
   assert.ok(fs.existsSync(contentPath), 'run npm run build:content first');

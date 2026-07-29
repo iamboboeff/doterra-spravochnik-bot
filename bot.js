@@ -9,13 +9,18 @@ import {
   topicsMenu,
 } from './src/ui.js';
 
-// Bothost добавляет свои переменные окружения. Для этой публичной deploy-сборки
-// намеренно используем значения из загруженного вместе с проектом файла .env.
-dotenv.config({ override: true });
+// Значение из панели хостинга главнее, но пустую переменную (Bothost подставляет
+// её, даже если поле не заполнено) считаем незаданной и берём из .env репозитория.
+const fileEnv = dotenv.config().parsed || {};
+for (const [key, value] of Object.entries(fileEnv)) {
+  if (!process.env[key]?.trim()) {
+    process.env[key] = value;
+  }
+}
 
-const token = process.env.BOT_TOKEN;
+const token = process.env.BOT_TOKEN?.trim();
 if (!token) {
-  console.error('Критическая ошибка: BOT_TOKEN отсутствует в файле .env.');
+  console.error('Критическая ошибка: не задан BOT_TOKEN (переменная окружения или .env).');
   process.exit(1);
 }
 
