@@ -4,9 +4,13 @@
   "private": true,
   "description": "Telegram-справочник по восстановленному тематическому указателю",
   "type": "module",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build:content": "node scripts/build-content.mjs",
-    "start": "node bot.js",
+    "start": "node index.js",
     "test": "node --test"
   },
   "dependencies": {
