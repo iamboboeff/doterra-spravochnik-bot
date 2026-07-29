@@ -1,0 +1,16 @@
+{
+  "name": "doterra-spravochnik-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Telegram-справочник по восстановленному тематическому указателю",
+  "type": "module",
+  "scripts": {
+    "build:content": "node scripts/build-content.mjs",
+    "start": "node bot.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "grammy": "^1.30.0"
+  }
+}
