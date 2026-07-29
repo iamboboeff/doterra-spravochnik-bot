@@ -1,5 +1,5 @@
-import 'dotenv/config';
 import process from 'node:process';
+import dotenv from 'dotenv';
 import { Bot } from 'grammy';
 import { loadContent, searchContent, splitMessage } from './src/content.js';
 import {
@@ -9,9 +9,13 @@ import {
   topicsMenu,
 } from './src/ui.js';
 
+// Bothost добавляет свои переменные окружения. Для этой публичной deploy-сборки
+// намеренно используем значения из загруженного вместе с проектом файла .env.
+dotenv.config({ override: true });
+
 const token = process.env.BOT_TOKEN;
 if (!token) {
-  console.error('Не задан BOT_TOKEN. Скопируйте .env.example в .env и добавьте токен.');
+  console.error('Критическая ошибка: BOT_TOKEN отсутствует в файле .env.');
   process.exit(1);
 }
 
@@ -211,9 +215,14 @@ bot.catch((error) => {
   console.error('Ошибка бота:', error.error?.message || error.message);
 });
 
-bot.start({
-  allowed_updates: ['message', 'callback_query'],
-  onStart: ({ username }) => {
-    console.log(`✓ @${username} запущен: ${content.topicCount} тем, ${content.postCount} постов`);
-  },
-});
+try {
+  await bot.start({
+    allowed_updates: ['message', 'callback_query'],
+    onStart: ({ username }) => {
+      console.log(`✓ @${username} запущен: ${content.topicCount} тем, ${content.postCount} постов`);
+    },
+  });
+} catch (error) {
+  console.error('Критическая ошибка запуска Telegram-бота:', error?.message || error);
+  process.exit(1);
+}
